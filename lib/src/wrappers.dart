@@ -9,113 +9,113 @@ import 'unmodifiable_wrappers.dart';
 
 /// A base class for delegating iterables.
 ///
-/// Subclasses can provide a [_base] that should be delegated to. Unlike
+/// Subclasses can provide a [base] that should be delegated to. Unlike
 /// [DelegatingIterable], this allows the base to be created on demand.
 abstract class _DelegatingIterableBase<E> implements Iterable<E> {
-  Iterable<E> get _base;
+  Iterable<E> get base;
 
   const _DelegatingIterableBase();
 
   @override
-  bool any(bool Function(E) test) => _base.any(test);
+  bool any(bool Function(E) test) => base.any(test);
 
   @override
-  Iterable<T> cast<T>() => _base.cast<T>();
+  Iterable<T> cast<T>() => base.cast<T>();
 
   @override
-  bool contains(Object? element) => _base.contains(element);
+  bool contains(Object? element) => base.contains(element);
 
   @override
-  E elementAt(int index) => _base.elementAt(index);
+  E elementAt(int index) => base.elementAt(index);
 
   @override
-  bool every(bool Function(E) test) => _base.every(test);
+  bool every(bool Function(E) test) => base.every(test);
 
   @override
-  Iterable<T> expand<T>(Iterable<T> Function(E) f) => _base.expand(f);
+  Iterable<T> expand<T>(Iterable<T> Function(E) f) => base.expand(f);
 
   @override
-  E get first => _base.first;
+  E get first => base.first;
 
   @override
   E firstWhere(bool Function(E) test, {E Function()? orElse}) =>
-      _base.firstWhere(test, orElse: orElse);
+      base.firstWhere(test, orElse: orElse);
 
   @override
   T fold<T>(T initialValue, T Function(T previousValue, E element) combine) =>
-      _base.fold(initialValue, combine);
+      base.fold(initialValue, combine);
 
   @override
-  Iterable<E> followedBy(Iterable<E> other) => _base.followedBy(other);
+  Iterable<E> followedBy(Iterable<E> other) => base.followedBy(other);
 
   @override
-  void forEach(void Function(E) f) => _base.forEach(f);
+  void forEach(void Function(E) f) => base.forEach(f);
 
   @override
-  bool get isEmpty => _base.isEmpty;
+  bool get isEmpty => base.isEmpty;
 
   @override
-  bool get isNotEmpty => _base.isNotEmpty;
+  bool get isNotEmpty => base.isNotEmpty;
 
   @override
-  Iterator<E> get iterator => _base.iterator;
+  Iterator<E> get iterator => base.iterator;
 
   @override
-  String join([String separator = '']) => _base.join(separator);
+  String join([String separator = '']) => base.join(separator);
 
   @override
-  E get last => _base.last;
+  E get last => base.last;
 
   @override
   E lastWhere(bool Function(E) test, {E Function()? orElse}) =>
-      _base.lastWhere(test, orElse: orElse);
+      base.lastWhere(test, orElse: orElse);
 
   @override
-  int get length => _base.length;
+  int get length => base.length;
 
   @override
-  Iterable<T> map<T>(T Function(E) f) => _base.map(f);
+  Iterable<T> map<T>(T Function(E) f) => base.map(f);
 
   @override
-  E reduce(E Function(E value, E element) combine) => _base.reduce(combine);
+  E reduce(E Function(E value, E element) combine) => base.reduce(combine);
 
   @Deprecated("Use cast instead")
   Iterable<T> retype<T>() => cast<T>();
 
   @override
-  E get single => _base.single;
+  E get single => base.single;
 
   @override
   E singleWhere(bool Function(E) test, {E Function()? orElse}) {
-    return _base.singleWhere(test, orElse: orElse);
+    return base.singleWhere(test, orElse: orElse);
   }
 
   @override
-  Iterable<E> skip(int n) => _base.skip(n);
+  Iterable<E> skip(int n) => base.skip(n);
 
   @override
-  Iterable<E> skipWhile(bool Function(E) test) => _base.skipWhile(test);
+  Iterable<E> skipWhile(bool Function(E) test) => base.skipWhile(test);
 
   @override
-  Iterable<E> take(int n) => _base.take(n);
+  Iterable<E> take(int n) => base.take(n);
 
   @override
-  Iterable<E> takeWhile(bool Function(E) test) => _base.takeWhile(test);
+  Iterable<E> takeWhile(bool Function(E) test) => base.takeWhile(test);
 
   @override
-  List<E> toList({bool growable = true}) => _base.toList(growable: growable);
+  List<E> toList({bool growable = true}) => base.toList(growable: growable);
 
   @override
-  Set<E> toSet() => _base.toSet();
+  Set<E> toSet() => base.toSet();
 
   @override
-  Iterable<E> where(bool Function(E) test) => _base.where(test);
+  Iterable<E> where(bool Function(E) test) => base.where(test);
 
   @override
-  Iterable<T> whereType<T>() => _base.whereType<T>();
+  Iterable<T> whereType<T>() => base.whereType<T>();
 
   @override
-  String toString() => _base.toString();
+  String toString() => base.toString();
 }
 
 /// An [Iterable] that delegates all operations to a base iterable.
@@ -125,10 +125,10 @@ abstract class _DelegatingIterableBase<E> implements Iterable<E> {
 /// iterable object.
 class DelegatingIterable<E> extends _DelegatingIterableBase<E> {
   @override
-  final Iterable<E> _base;
+  final Iterable<E> base;
 
   /// Creates a wrapper that forwards operations to [base].
-  const DelegatingIterable(Iterable<E> base) : _base = base;
+  const DelegatingIterable(this.base);
 
   /// Creates a wrapper that asserts the types of values in [base].
   ///
@@ -150,9 +150,9 @@ class DelegatingIterable<E> extends _DelegatingIterableBase<E> {
 /// object.
 class DelegatingList<E> extends _DelegatingIterableBase<E> implements List<E> {
   @override
-  final List<E> _base;
+  final List<E> base;
 
-  const DelegatingList(List<E> base) : _base = base;
+  const DelegatingList(this.base);
 
   /// Creates a wrapper that asserts the types of values in [base].
   ///
@@ -169,40 +169,40 @@ class DelegatingList<E> extends _DelegatingIterableBase<E> implements List<E> {
   static List<E> typed<E>(List base) => base.cast<E>();
 
   @override
-  E operator [](int index) => _base[index];
+  E operator [](int index) => base[index];
 
   @override
   void operator []=(int index, E value) {
-    _base[index] = value;
+    base[index] = value;
   }
 
   @override
-  List<E> operator +(List<E> other) => _base + other;
+  List<E> operator +(List<E> other) => base + other;
 
   @override
   void add(E value) {
-    _base.add(value);
+    base.add(value);
   }
 
   @override
   void addAll(Iterable<E> iterable) {
-    _base.addAll(iterable);
+    base.addAll(iterable);
   }
 
   @override
-  Map<int, E> asMap() => _base.asMap();
+  Map<int, E> asMap() => base.asMap();
 
   @override
-  List<T> cast<T>() => _base.cast<T>();
+  List<T> cast<T>() => base.cast<T>();
 
   @override
   void clear() {
-    _base.clear();
+    base.clear();
   }
 
   @override
   void fillRange(int start, int end, [E? fillValue]) {
-    _base.fillRange(start, end, fillValue);
+    base.fillRange(start, end, fillValue);
   }
 
   @override
@@ -212,23 +212,23 @@ class DelegatingList<E> extends _DelegatingIterableBase<E> implements List<E> {
   }
 
   @override
-  Iterable<E> getRange(int start, int end) => _base.getRange(start, end);
+  Iterable<E> getRange(int start, int end) => base.getRange(start, end);
 
   @override
-  int indexOf(E element, [int start = 0]) => _base.indexOf(element, start);
+  int indexOf(E element, [int start = 0]) => base.indexOf(element, start);
 
   @override
   int indexWhere(bool Function(E) test, [int start = 0]) =>
-      _base.indexWhere(test, start);
+      base.indexWhere(test, start);
 
   @override
   void insert(int index, E element) {
-    _base.insert(index, element);
+    base.insert(index, element);
   }
 
   @override
   void insertAll(int index, Iterable<E> iterable) {
-    _base.insertAll(index, iterable);
+    base.insertAll(index, iterable);
   }
 
   @override
@@ -238,44 +238,44 @@ class DelegatingList<E> extends _DelegatingIterableBase<E> implements List<E> {
   }
 
   @override
-  int lastIndexOf(E element, [int? start]) => _base.lastIndexOf(element, start);
+  int lastIndexOf(E element, [int? start]) => base.lastIndexOf(element, start);
 
   @override
   int lastIndexWhere(bool Function(E) test, [int? start]) =>
-      _base.lastIndexWhere(test, start);
+      base.lastIndexWhere(test, start);
 
   @override
   set length(int newLength) {
-    _base.length = newLength;
+    base.length = newLength;
   }
 
   @override
-  bool remove(Object? value) => _base.remove(value);
+  bool remove(Object? value) => base.remove(value);
 
   @override
-  E removeAt(int index) => _base.removeAt(index);
+  E removeAt(int index) => base.removeAt(index);
 
   @override
-  E removeLast() => _base.removeLast();
+  E removeLast() => base.removeLast();
 
   @override
   void removeRange(int start, int end) {
-    _base.removeRange(start, end);
+    base.removeRange(start, end);
   }
 
   @override
   void removeWhere(bool Function(E) test) {
-    _base.removeWhere(test);
+    base.removeWhere(test);
   }
 
   @override
   void replaceRange(int start, int end, Iterable<E> iterable) {
-    _base.replaceRange(start, end, iterable);
+    base.replaceRange(start, end, iterable);
   }
 
   @override
   void retainWhere(bool Function(E) test) {
-    _base.retainWhere(test);
+    base.retainWhere(test);
   }
 
   @Deprecated("Use cast instead")
@@ -283,30 +283,30 @@ class DelegatingList<E> extends _DelegatingIterableBase<E> implements List<E> {
   List<T> retype<T>() => cast<T>();
 
   @override
-  Iterable<E> get reversed => _base.reversed;
+  Iterable<E> get reversed => base.reversed;
 
   @override
   void setAll(int index, Iterable<E> iterable) {
-    _base.setAll(index, iterable);
+    base.setAll(index, iterable);
   }
 
   @override
   void setRange(int start, int end, Iterable<E> iterable, [int skipCount = 0]) {
-    _base.setRange(start, end, iterable, skipCount);
+    base.setRange(start, end, iterable, skipCount);
   }
 
   @override
   void shuffle([math.Random? random]) {
-    _base.shuffle(random);
+    base.shuffle(random);
   }
 
   @override
   void sort([int Function(E, E)? compare]) {
-    _base.sort(compare);
+    base.sort(compare);
   }
 
   @override
-  List<E> sublist(int start, [int? end]) => _base.sublist(start, end);
+  List<E> sublist(int start, [int? end]) => base.sublist(start, end);
 }
 
 /// A [Set] that delegates all operations to a base set.
@@ -315,9 +315,9 @@ class DelegatingList<E> extends _DelegatingIterableBase<E> implements List<E> {
 /// be extended to add extra functionality on top of an existing set object.
 class DelegatingSet<E> extends _DelegatingIterableBase<E> implements Set<E> {
   @override
-  final Set<E> _base;
+  final Set<E> base;
 
-  const DelegatingSet(Set<E> base) : _base = base;
+  const DelegatingSet(this.base);
 
   /// Creates a wrapper that asserts the types of values in [base].
   ///
@@ -334,49 +334,49 @@ class DelegatingSet<E> extends _DelegatingIterableBase<E> implements Set<E> {
   static Set<E> typed<E>(Set base) => base.cast<E>();
 
   @override
-  bool add(E value) => _base.add(value);
+  bool add(E value) => base.add(value);
 
   @override
   void addAll(Iterable<E> elements) {
-    _base.addAll(elements);
+    base.addAll(elements);
   }
 
   @override
-  Set<T> cast<T>() => _base.cast<T>();
+  Set<T> cast<T>() => base.cast<T>();
 
   @override
   void clear() {
-    _base.clear();
+    base.clear();
   }
 
   @override
-  bool containsAll(Iterable<Object?> other) => _base.containsAll(other);
+  bool containsAll(Iterable<Object?> other) => base.containsAll(other);
 
   @override
-  Set<E> difference(Set<Object?> other) => _base.difference(other);
+  Set<E> difference(Set<Object?> other) => base.difference(other);
 
   @override
-  Set<E> intersection(Set<Object?> other) => _base.intersection(other);
+  Set<E> intersection(Set<Object?> other) => base.intersection(other);
 
   @override
-  E? lookup(Object? element) => _base.lookup(element);
+  E? lookup(Object? element) => base.lookup(element);
 
   @override
-  bool remove(Object? value) => _base.remove(value);
+  bool remove(Object? value) => base.remove(value);
 
   @override
   void removeAll(Iterable<Object?> elements) {
-    _base.removeAll(elements);
+    base.removeAll(elements);
   }
 
   @override
   void removeWhere(bool Function(E) test) {
-    _base.removeWhere(test);
+    base.removeWhere(test);
   }
 
   @override
   void retainAll(Iterable<Object?> elements) {
-    _base.retainAll(elements);
+    base.retainAll(elements);
   }
 
   @Deprecated("Use cast instead")
@@ -385,14 +385,14 @@ class DelegatingSet<E> extends _DelegatingIterableBase<E> implements Set<E> {
 
   @override
   void retainWhere(bool Function(E) test) {
-    _base.retainWhere(test);
+    base.retainWhere(test);
   }
 
   @override
-  Set<E> union(Set<E> other) => _base.union(other);
+  Set<E> union(Set<E> other) => base.union(other);
 
   @override
-  Set<E> toSet() => DelegatingSet<E>(_base.toSet());
+  Set<E> toSet() => DelegatingSet<E>(base.toSet());
 }
 
 /// A [Queue] that delegates all operations to a base queue.
@@ -403,9 +403,9 @@ class DelegatingSet<E> extends _DelegatingIterableBase<E> implements Set<E> {
 class DelegatingQueue<E> extends _DelegatingIterableBase<E>
     implements Queue<E> {
   @override
-  final Queue<E> _base;
+  final Queue<E> base;
 
-  const DelegatingQueue(Queue<E> queue) : _base = queue;
+  const DelegatingQueue(Queue<E> queue) : base = queue;
 
   /// Creates a wrapper that asserts the types of values in [base].
   ///
@@ -423,43 +423,43 @@ class DelegatingQueue<E> extends _DelegatingIterableBase<E>
 
   @override
   void add(E value) {
-    _base.add(value);
+    base.add(value);
   }
 
   @override
   void addAll(Iterable<E> iterable) {
-    _base.addAll(iterable);
+    base.addAll(iterable);
   }
 
   @override
   void addFirst(E value) {
-    _base.addFirst(value);
+    base.addFirst(value);
   }
 
   @override
   void addLast(E value) {
-    _base.addLast(value);
+    base.addLast(value);
   }
 
   @override
-  Queue<T> cast<T>() => _base.cast<T>();
+  Queue<T> cast<T>() => base.cast<T>();
 
   @override
   void clear() {
-    _base.clear();
+    base.clear();
   }
 
   @override
-  bool remove(Object? object) => _base.remove(object);
+  bool remove(Object? object) => base.remove(object);
 
   @override
   void removeWhere(bool Function(E) test) {
-    _base.removeWhere(test);
+    base.removeWhere(test);
   }
 
   @override
   void retainWhere(bool Function(E) test) {
-    _base.retainWhere(test);
+    base.retainWhere(test);
   }
 
   @Deprecated("Use cast instead")
@@ -467,10 +467,10 @@ class DelegatingQueue<E> extends _DelegatingIterableBase<E>
   Queue<T> retype<T>() => cast<T>();
 
   @override
-  E removeFirst() => _base.removeFirst();
+  E removeFirst() => base.removeFirst();
 
   @override
-  E removeLast() => _base.removeLast();
+  E removeLast() => base.removeLast();
 }
 
 /// A [Map] that delegates all operations to a base map.
@@ -479,9 +479,9 @@ class DelegatingQueue<E> extends _DelegatingIterableBase<E>
 /// `Map`, or it can be extended to add extra functionality on top of an
 /// existing map object.
 class DelegatingMap<K, V> implements Map<K, V> {
-  final Map<K, V> _base;
+  final Map<K, V> base;
 
-  const DelegatingMap(Map<K, V> base) : _base = base;
+  const DelegatingMap(this.base);
 
   /// Creates a wrapper that asserts the types of keys and values in [base].
   ///
@@ -498,86 +498,86 @@ class DelegatingMap<K, V> implements Map<K, V> {
   static Map<K, V> typed<K, V>(Map base) => base.cast<K, V>();
 
   @override
-  V? operator [](Object? key) => _base[key];
+  V? operator [](Object? key) => base[key];
 
   @override
   void operator []=(K key, V value) {
-    _base[key] = value;
+    base[key] = value;
   }
 
   @override
   void addAll(Map<K, V> other) {
-    _base.addAll(other);
+    base.addAll(other);
   }
 
   @override
   void addEntries(Iterable<MapEntry<K, V>> entries) {
-    _base.addEntries(entries);
+    base.addEntries(entries);
   }
 
   @override
   void clear() {
-    _base.clear();
+    base.clear();
   }
 
   @override
-  Map<K2, V2> cast<K2, V2>() => _base.cast<K2, V2>();
+  Map<K2, V2> cast<K2, V2>() => base.cast<K2, V2>();
 
   @override
-  bool containsKey(Object? key) => _base.containsKey(key);
+  bool containsKey(Object? key) => base.containsKey(key);
 
   @override
-  bool containsValue(Object? value) => _base.containsValue(value);
+  bool containsValue(Object? value) => base.containsValue(value);
 
   @override
-  Iterable<MapEntry<K, V>> get entries => _base.entries;
+  Iterable<MapEntry<K, V>> get entries => base.entries;
 
   @override
   void forEach(void Function(K, V) f) {
-    _base.forEach(f);
+    base.forEach(f);
   }
 
   @override
-  bool get isEmpty => _base.isEmpty;
+  bool get isEmpty => base.isEmpty;
 
   @override
-  bool get isNotEmpty => _base.isNotEmpty;
+  bool get isNotEmpty => base.isNotEmpty;
 
   @override
-  Iterable<K> get keys => _base.keys;
+  Iterable<K> get keys => base.keys;
 
   @override
-  int get length => _base.length;
+  int get length => base.length;
 
   @override
   Map<K2, V2> map<K2, V2>(MapEntry<K2, V2> Function(K, V) transform) =>
-      _base.map(transform);
+      base.map(transform);
 
   @override
   V putIfAbsent(K key, V Function() ifAbsent) =>
-      _base.putIfAbsent(key, ifAbsent);
+      base.putIfAbsent(key, ifAbsent);
 
   @override
-  V? remove(Object? key) => _base.remove(key);
+  V? remove(Object? key) => base.remove(key);
 
   @override
-  void removeWhere(bool Function(K, V) test) => _base.removeWhere(test);
+  void removeWhere(bool Function(K, V) test) => base.removeWhere(test);
 
   @Deprecated("Use cast instead")
   Map<K2, V2> retype<K2, V2>() => cast<K2, V2>();
 
   @override
-  Iterable<V> get values => _base.values;
+  Iterable<V> get values => base.values;
 
   @override
-  String toString() => _base.toString();
+  String toString() => base.toString();
 
   @override
   V update(K key, V Function(V) update, {V Function()? ifAbsent}) =>
-      _base.update(key, update, ifAbsent: ifAbsent);
+      base.update(key, update, ifAbsent: ifAbsent);
 
   @override
-  void updateAll(V Function(K, V) update) => _base.updateAll(update);
+  void updateAll(V Function(K, V) update) => base.updateAll(update);
 }
 
 /// An unmodifiable [Set] view of the keys of a [Map].
@@ -591,12 +591,12 @@ class DelegatingMap<K, V> implements Map<K, V> {
 /// Note that [lookup] is not supported for this set.
 class MapKeySet<E> extends _DelegatingIterableBase<E>
     with UnmodifiableSetMixin<E> {
-  final Map<E, dynamic> _baseMap;
+  final Map<E, dynamic> baseMap;
 
-  MapKeySet(this._baseMap);
+  MapKeySet(this.baseMap);
 
   @override
-  Iterable<E> get _base => _baseMap.keys;
+  Iterable<E> get base => baseMap.keys;
 
   @override
   Set<T> cast<T>() {
@@ -607,16 +607,16 @@ class MapKeySet<E> extends _DelegatingIterableBase<E>
   }
 
   @override
-  bool contains(Object? element) => _baseMap.containsKey(element);
+  bool contains(Object? element) => baseMap.containsKey(element);
 
   @override
-  bool get isEmpty => _baseMap.isEmpty;
+  bool get isEmpty => baseMap.isEmpty;
 
   @override
-  bool get isNotEmpty => _baseMap.isNotEmpty;
+  bool get isNotEmpty => baseMap.isNotEmpty;
 
   @override
-  int get length => _baseMap.length;
+  int get length => baseMap.length;
 
   @override
   String toString() => SetBase.setToString(this);
@@ -688,18 +688,18 @@ class MapKeySet<E> extends _DelegatingIterableBase<E>
 ///
 /// Effectively, the map will act as a kind of index for the set.
 class MapValueSet<K, V> extends _DelegatingIterableBase<V> implements Set<V> {
-  final Map<K, V> _baseMap;
+  final Map<K, V> baseMap;
   final K Function(V) _keyForValue;
 
-  /// Creates a new [MapValueSet] based on [_baseMap].
+  /// Creates a new [MapValueSet] based on [baseMap].
   ///
   /// [_keyForValue] returns the key in the map that should be associated with
   /// the given value. The set's notion of equality is identical to the equality
   /// of the return values of [_keyForValue].
-  MapValueSet(this._baseMap, this._keyForValue);
+  MapValueSet(this.baseMap, this._keyForValue);
 
   @override
-  Iterable<V> get _base => _baseMap.values;
+  Iterable<V> get base => baseMap.values;
 
   @override
   Set<T> cast<T>() {
@@ -714,17 +714,17 @@ class MapValueSet<K, V> extends _DelegatingIterableBase<V> implements Set<V> {
     if (element is! V) return false;
     var key = _keyForValue(element);
 
-    return _baseMap.containsKey(key);
+    return baseMap.containsKey(key);
   }
 
   @override
-  bool get isEmpty => _baseMap.isEmpty;
+  bool get isEmpty => baseMap.isEmpty;
 
   @override
-  bool get isNotEmpty => _baseMap.isNotEmpty;
+  bool get isNotEmpty => baseMap.isNotEmpty;
 
   @override
-  int get length => _baseMap.length;
+  int get length => baseMap.length;
 
   @override
   String toString() => toSet().toString();
@@ -733,7 +733,7 @@ class MapValueSet<K, V> extends _DelegatingIterableBase<V> implements Set<V> {
   bool add(V value) {
     var key = _keyForValue(value);
     var result = false;
-    _baseMap.putIfAbsent(key, () {
+    baseMap.putIfAbsent(key, () {
       result = true;
       return value;
     });
@@ -744,7 +744,7 @@ class MapValueSet<K, V> extends _DelegatingIterableBase<V> implements Set<V> {
   void addAll(Iterable<V> elements) => elements.forEach(add);
 
   @override
-  void clear() => _baseMap.clear();
+  void clear() => baseMap.clear();
 
   @override
   bool containsAll(Iterable<Object?> other) => other.every(contains);
@@ -775,7 +775,7 @@ class MapValueSet<K, V> extends _DelegatingIterableBase<V> implements Set<V> {
     if (element is! V) return null;
     var key = _keyForValue(element);
 
-    return _baseMap[key];
+    return baseMap[key];
   }
 
   @override
@@ -783,8 +783,8 @@ class MapValueSet<K, V> extends _DelegatingIterableBase<V> implements Set<V> {
     if (element is! V) return false;
     var key = _keyForValue(element);
 
-    if (!_baseMap.containsKey(key)) return false;
-    _baseMap.remove(key);
+    if (!baseMap.containsKey(key)) return false;
+    baseMap.remove(key);
     return true;
   }
 
@@ -794,10 +794,10 @@ class MapValueSet<K, V> extends _DelegatingIterableBase<V> implements Set<V> {
   @override
   void removeWhere(bool Function(V) test) {
     var toRemove = [];
-    _baseMap.forEach((key, value) {
+    baseMap.forEach((key, value) {
       if (test(value)) toRemove.add(key);
     });
-    toRemove.forEach(_baseMap.remove);
+    toRemove.forEach(baseMap.remove);
   }
 
   @override
@@ -807,15 +807,15 @@ class MapValueSet<K, V> extends _DelegatingIterableBase<V> implements Set<V> {
       if (element is! V) continue;
       var key = _keyForValue(element);
 
-      if (!_baseMap.containsKey(key)) continue;
-      valuesToRetain.add(_baseMap[key] ?? null as V);
+      if (!baseMap.containsKey(key)) continue;
+      valuesToRetain.add(baseMap[key] ?? null as V);
     }
 
     var keysToRemove = [];
-    _baseMap.forEach((k, v) {
+    baseMap.forEach((k, v) {
       if (!valuesToRetain.contains(v)) keysToRemove.add(k);
     });
-    keysToRemove.forEach(_baseMap.remove);
+    keysToRemove.forEach(baseMap.remove);
   }
 
   @override
